@@ -11,6 +11,7 @@ import ItemView from '../views/ItemView.vue'
 import ItemDetail from '../views/ItemDetail.vue'
 import ItemUpdateView from '../views/ItemUpdateView.vue'
 import OrderView from '../views/OrderView.vue'
+import Profile from '../views/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -83,6 +84,11 @@ const router = createRouter({
     {
       path: '/orders',
       component: OrderView
+    },
+
+    {
+      path: '/profile',
+      component: Profile
     }
   ]
 })

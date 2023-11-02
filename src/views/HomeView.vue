@@ -2,45 +2,26 @@
 import { ref } from 'vue'
 const heading = 'Loin Here'
 const description = 'Welcome back !'
-import axios from 'axios'
 import { useRouter } from 'vue-router'
-
 const email = ref<string>('')
 const password = ref<string>('')
-const router = useRouter() // Access the router instance
+const router = useRouter()
+import { authRepository } from '@/repositories/authRepository';
 
 const handleLogin = async (e: any) => {
   e.preventDefault()
-  const res = await axios.post('http://localhost:8000/auth/login', {
+  const res = await authRepository.login({
     email: email.value,
     password: password.value
   })
   localStorage.setItem('access_token', res.data.access_token)
-  res.status === 200 && router.push('/about')
+  res.status === 200 && router.push('/profile')
 }
 </script>
 
 <template>
- <div class="flex items-center gap-"> 
-  <router-link :to="'/tables'">
-    <button class="cursor-pointer">Tables</button>
-  </router-link>
-
-  <router-link :to="'/items'">
-    <button class="cursor-pointer">Order Items</button>
-  </router-link>
-
-  <router-link :to="'/units'">
-    <button class="cursor-pointer">Item Unit</button>
-  </router-link>
- </div>
-
   <div class="flex justify-center items-center h-screen">
     <div class="flex flex-col max-w-md p-6 rounded-md sm:p-10 shadow-md w-full md:w-6/12 border">
-      <div>
-        <p>Email: {{ email }}</p>
-        <p>Password: {{ password }}</p>
-      </div>
       <div class="mb-8 text-center">
         <h1 class="my-3 text-4xl font-bold">{{ heading }}</h1>
         <p class="text-sm">{{ description }}</p>
@@ -94,16 +75,3 @@ const handleLogin = async (e: any) => {
     </div>
   </div>
 </template>
-
-<!-- <script setup lang="ts">
-import ParentComponent from './ParentComponent.vue'
-import ChildComponent from './ChildComponent.vue'
-</script>
-
-<template>
-  <div>
-    <ParentComponent>
-      <ChildComponent />
-    </ParentComponent>
-  </div>
-</template> -->
