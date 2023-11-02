@@ -1,25 +1,20 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
+import { AxiosInstance } from '@/repositories/config'
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 const tableHeadings = ['S.N', 'Name', 'Organization', 'CreatedAt', 'UpdatedAt', 'Actions']
 const tables = ref<any>([])
 
-onMounted(() => {
-  const get_all_tables = async () => {
-    const headers = {
-      'x-authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE2OTg5MTQ0Mjl9.PIieo_VVLk-DtsFC1Lqqf9yqysuoQ6bA5zzgHkg3mQU' // Replace with your token
-    }
-    try {
-      const res = await axios.get('http://localhost:8000/tables', { headers: headers })
-      tables.value = res.data.tables
-    } catch (error) {
-      console.error('Error fetching data:', error)
-    }
+onMounted(async () => {
+  try {
+    const response = await AxiosInstance.get('/tables')
+    tables.value = response.data.tables
+  } catch (error) {
+    console.error('Error fetching data:', error)
   }
-  get_all_tables()
 })
 
-const deleteTable = async (id) => {
+const deleteTable = async (id:number) => {
   try {
     await axios.delete(`http://localhost:8000/tables/${id}`)
     // Assuming the delete request was successful, remove the item from the tables array
@@ -79,4 +74,4 @@ const deleteTable = async (id) => {
       </table>
     </div>
   </div>
-</template> -->
+</template>

@@ -4,9 +4,8 @@ export const AxiosInstance = axios.create({
   baseURL: 'http://localhost:8000'
 })
 
-// // Adding  an interceptor to AxiosInstance to modify the request
-// AxiosInstance.interceptors.request.use((config) => {
-//   const accessToken = localStorage.getItem('accessToken')
-//   config.headers.Authorization = accessToken
-//   return config
-// })
+AxiosInstance.interceptors.request.use(async (config) => {
+  const accessToken = localStorage.getItem('access_token')
+  config.headers['x-authorization'] = accessToken
+  return config
+})

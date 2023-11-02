@@ -1,27 +1,25 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { ref } from 'vue'
-import TablesTable from '../components/TablesTable.vue'
-
+import TableLists from '@/components/TableLists.vue'
 const name = ref<string>('')
 const organization_id = ref<number>()
 
-const createTable = async (e: any) => {
-  e.preventDefault()
-  const res = await axios.post('http://localhost:8000/tables', {
-    name: name.value,
-    organization_id: organization_id.value
-  })
-}
+// const createTable = async (e: any) => {
+//   e.preventDefault()
+//   const res = await axios.post('http://localhost:8000/tables', {
+//     name: name.value,
+//     organization_id: organization_id.value
+//   })
+// }
 </script>
 
 <template>
-  <h1>Here is a child component!</h1>
-  <TablesTable />
+  <TableLists />
 
-  <div class="flex justify-center items-center">
+  <!-- <div class="flex justify-center items-center">
     <div class="flex flex-col max-w-md p-6 rounded-md sm:p-10 shadow-md w-full md:w-6/12 border">
-      <div class=" text-2xl">Create Table</div>
+      <div class="text-2xl">Create Table</div>
       <div class="mb-8 text-center"></div>
       <form @submit="createTable" action="" class="space-y-12">
         <div class="space-y-4">
@@ -58,5 +56,5 @@ const createTable = async (e: any) => {
         </div>
       </form>
     </div>
-  </div>
+  </div> -->
 </template>
