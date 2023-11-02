@@ -1,29 +1,17 @@
 <script setup lang="ts">
 const url = window.location.href
 const id = url.split('/').slice(-1)[0]
-console.log(id)
-
-import axios from 'axios'
 import { ref, onMounted } from 'vue'
 const table = ref<any>()
+import { tableRepository } from '@/repositories/tableRepository'
 
-onMounted(() => {
-  const get_single_table = async () => {
-    const headers = {
-      'x-authorization':
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE2OTY1MTkzMjZ9.zkrafHGkE5iLnLYAoNRqeHxYWccvgyfMfdJp8DqZYIA' // Replace with your token
-    }
-    try {
-      const res = await axios.get(`http://localhost:8000/tables/${id}`, {
-        headers: headers
-      })
-      table.value = res?.data
-    } catch (error) {
-      console.error('Error fetching data:', error)
-    }
+onMounted(async () => {
+  try {
+    const response = id && (await tableRepository.get_single(id))
+    table.value = response.data.table
+  } catch (error) {
+    console.error('Error fetching data:', error)
   }
-  get_single_table()
-  console.log(table)
 })
 </script>
 

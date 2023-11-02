@@ -2,42 +2,32 @@
 const url = window.location.href
 const id = url.split('/').slice(-1)[0]
 console.log(id)
-
 import axios from 'axios'
 import { ref, onMounted } from 'vue'
 const table = ref<any>({})
 const name = ref<string>('')
 
-onMounted(() => {
-  const get_single_table = async () => {
-    try {
-      const headers = {
-        'x-authorization':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJleHAiOjE2OTY1MTkzMjZ9.zkrafHGkE5iLnLYAoNRqeHxYWccvgyfMfdJp8DqZYIA' // Replace with your token
-      }
-      const res = await axios.get(`http://localhost:8000/tables/${id}`, {
-        headers: headers
-      })
-      table.value = res?.data
-      name.value = res?.data?.name || ''
-    } catch (error) {
-      console.error('Error fetching data:', error)
-    }
+import { tableRepository } from '@/repositories/tableRepository'
+
+onMounted(async () => {
+  try {
+    const response = id && (await tableRepository.get_single(id))
+    table.value = response.data.table
+  } catch (error) {
+    console.error('Error fetching data:', error)
   }
-  get_single_table()
-  console.log(table)
 })
 
-const update_table = async () => {
-  try {
-    const res = await axios.patch(`http://localhost:8000/tables/${id}`, {
-      name: name.value,
-      organization_id: 1
-    })
-  } catch (error) {
-    console.error('Error updating data:', error)
-  }
-}
+// const update_table = async () => {
+//   try {
+//     const res = await axios.patch(`http://localhost:8000/tables/${id}`, {
+//       name: name.value,
+//       organization_id: 1
+//     })
+//   } catch (error) {
+//     console.error('Error updating data:', error)
+//   }
+// }
 </script>
 
 <template>
@@ -57,7 +47,7 @@ const update_table = async () => {
             class="w-full border py-1.5 px-2"
           />
         </div>
-        <Button @click="update_table" class="bg-blue-500 text-white px-2 mt-3">Update</Button>
+        <!-- <Button @click="update_table" class="bg-blue-500 text-white px-2 mt-3">Update</Button> -->
       </h1>
     </div>
   </div>

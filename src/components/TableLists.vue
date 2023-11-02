@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { AxiosInstance } from '@/repositories/config'
 import axios from 'axios'
+import type { TableOut } from '@/types/type'
 import { ref, onMounted } from 'vue'
 const tableHeadings = ['S.N', 'Name', 'Organization', 'CreatedAt', 'UpdatedAt', 'Actions']
-const tables = ref<any>([])
+const tables = ref<TableOut[]>([])
+import { tableRepository } from '@/repositories/tableRepository'
 
 onMounted(async () => {
   try {
-    const response = await AxiosInstance.get('/tables')
+    const response = await tableRepository.getAll()
     tables.value = response.data.tables
   } catch (error) {
     console.error('Error fetching data:', error)
   }
 })
 
-const deleteTable = async (id:number) => {
+const deleteTable = async (id: number) => {
   try {
-    await axios.delete(`http://localhost:8000/tables/${id}`)
-    // Assuming the delete request was successful, remove the item from the tables array
-    tables.value = tables.value.filter((item) => item.id !== id)
+    const response = await tableRepository.delete(id)
+    // after  successful, remove the item from the tables array
+    tables.value = tables.value.filter((item: TableOut) => item.id !== id)
   } catch (error) {
     console.error('Error deleting item:', error)
   }
