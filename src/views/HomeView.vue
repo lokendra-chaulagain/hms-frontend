@@ -21,6 +21,20 @@ const handleLogin = async (e: any) => {
 </script>
 
 <template>
+ <div class="flex items-center gap-"> 
+  <router-link :to="'/tables'">
+    <button class="cursor-pointer">Tables</button>
+  </router-link>
+
+  <router-link :to="'/items'">
+    <button class="cursor-pointer">Order Items</button>
+  </router-link>
+
+  <router-link :to="'/units'">
+    <button class="cursor-pointer">Item Unit</button>
+  </router-link>
+ </div>
+
   <div class="flex justify-center items-center h-screen">
     <div class="flex flex-col max-w-md p-6 rounded-md sm:p-10 shadow-md w-full md:w-6/12 border">
       <div>
@@ -80,3 +94,16 @@ const handleLogin = async (e: any) => {
     </div>
   </div>
 </template>
+
+<!-- <script setup lang="ts">
+import ParentComponent from './ParentComponent.vue'
+import ChildComponent from './ChildComponent.vue'
+</script>
+
+<template>
+  <div>
+    <ParentComponent>
+      <ChildComponent />
+    </ParentComponent>
+  </div>
+</template> -->

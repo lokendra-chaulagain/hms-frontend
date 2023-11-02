@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import axios from 'axios'
 
 interface IUser {
@@ -19,6 +19,12 @@ onMounted(() => {
   }
   get_user_from_token()
 })
+
+const inputValue = ref('')
+
+watch(inputValue, (newValue, oldValue) => {
+  console.log('Input value changed from', oldValue, 'to', newValue)
+})
 </script>
 
 <template>
@@ -26,5 +32,7 @@ onMounted(() => {
     <h1 class="text-2xl bg-green-300">User Authentication success</h1>
     <p>Full Name : {{ user?.fullName }}</p>
     <p>Email : {{ user?.email }}</p>
+    <h1 class="font-semibold">Watch Demo</h1>
+    <input v-model="inputValue" placeholder="Enter something" />
   </div>
 </template>
